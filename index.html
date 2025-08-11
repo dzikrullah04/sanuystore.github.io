@@ -99,6 +99,14 @@
         transform: translateX(20px);
         box-shadow: 0 0 8px rgba(76, 175, 239, 0.6);
     }
+    .price-box {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        color: #2d2d2d;
+        display: none;
+    }
     button {
         background-color: #4cafef;
         color: white;
@@ -107,7 +115,6 @@
         border-radius: 6px;
         font-size: 16px;
         cursor: pointer;
-        margin-top: 15px;
         width: 100%;
         max-width: 300px;
     }
@@ -121,12 +128,12 @@
 <div class="form-container">
     <div class="form-group">
         <label>Meeting Capacity<span class="required">*</span></label>
-        <select id="capacity" required>
+        <select id="capacity" required onchange="updatePrice()">
             <option value="">Select an option</option>
-            <option>100 Participants</option>
-            <option>300 Participants</option>
-            <option>500 Participants</option>
-            <option>1000 Participants</option>
+            <option value="100">100 Participants</option>
+            <option value="300">300 Participants</option>
+            <option value="500">500 Participants</option>
+            <option value="1000">1000 Participants</option>
         </select>
     </div>
     <div class="form-group">
@@ -161,10 +168,31 @@
             <span class="slider"></span>
         </label>
     </div>
+
+    <div class="price-box" id="priceBox"></div>
+
     <button type="button" onclick="sendWhatsApp()">Kirim</button>
 </div>
 
 <script>
+const prices = {
+    100: "Rp 5.000",
+    300: "Rp 55.000",
+    500: "Rp 90.000",
+    1000: "Rp 150.000"
+};
+
+function updatePrice() {
+    const capacity = document.getElementById("capacity").value;
+    const priceBox = document.getElementById("priceBox");
+    if (capacity && prices[capacity]) {
+        priceBox.style.display = "block";
+        priceBox.textContent = "Harga: " + prices[capacity];
+    } else {
+        priceBox.style.display = "none";
+    }
+}
+
 function sendWhatsApp() {
     const capacity = document.getElementById("capacity").value;
     const topic = document.getElementById("topic").value;
@@ -179,7 +207,7 @@ function sendWhatsApp() {
         return;
     }
 
-    const message = `Meeting Capacity: ${capacity}%0ATopic: ${topic}%0AStart Date: ${startDate}%0AStart Time: ${startTime}%0APasscode: ${passcode}%0AMute participants: ${mute}%0ARequest unmute: ${requestUnmute}`;
+    const message = `Meeting Capacity: ${capacity} Participants%0AHarga: ${prices[capacity]}%0ATopic: ${topic}%0AStart Date: ${startDate}%0AStart Time: ${startTime}%0APasscode: ${passcode}%0AMute participants: ${mute}%0ARequest unmute: ${requestUnmute}`;
     const phone = "6285174146390"; // 62 untuk Indonesia
     const url = `https://wa.me/${phone}?text=${message}`;
     window.open(url, '_blank');
