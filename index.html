@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+    .form-container {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .form-group {
+        margin-bottom: 15px;
+        max-width: 300px;
+    }
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .required {
+        color: red;
+    }
+    select, input[type="text"], input[type="time"], input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+    .inline-fields {
+        display: flex;
+        gap: 10px;
+    }
+    .inline-fields .date-input,
+    .inline-fields .time-input {
+        flex: 1;
+        max-width: 300px;
+    }
+    @media (max-width: 600px) {
+        .inline-fields {
+            flex-direction: column;
+        }
+    }
+    .toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+        max-width: 300px;
+    }
+    .toggle-switch {
+        position: relative;
+        width: 42px;
+        height: 22px;
+    }
+    .toggle-switch input {
+        display: none;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        background-color: #ccc;
+        border-radius: 22px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transition: background-color 0.3s ease;
+    }
+    .slider::before {
+        content: "";
+        position: absolute;
+        height: 18px;
+        width: 18px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        border-radius: 50%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    input:checked + .slider {
+        background-color: #4cafef;
+    }
+    input:checked + .slider::before {
+        transform: translateX(20px);
+        box-shadow: 0 0 8px rgba(76, 175, 239, 0.6);
+    }
+    button {
+        background-color: #4cafef;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        width: 100%;
+        max-width: 300px;
+    }
+    button:hover {
+        background-color: #3a9dd9;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="form-group">
+        <label>Meeting Capacity<span class="required">*</span></label>
+        <select id="capacity" required>
+            <option value="">Select an option</option>
+            <option>100 Participants</option>
+            <option>300 Participants</option>
+            <option>500 Participants</option>
+            <option>1000 Participants</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Topic<span class="required">*</span></label>
+        <input type="text" id="topic" placeholder="Input the Topic" required>
+    </div>
+    <div class="form-group inline-fields">
+        <div class="date-input">
+            <label>Start Date<span class="required">*</span></label>
+            <input type="date" id="startDate" required>
+        </div>
+        <div class="time-input">
+            <label>Start Time (WIB)<span class="required">*</span></label>
+            <input type="time" id="startTime" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Passcode<span class="required">*</span></label>
+        <input type="text" id="passcode" placeholder="Input the Passcode" required>
+    </div>
+    <div class="toggle">
+        <span>Mute participants upon entry</span>
+        <label class="toggle-switch">
+            <input type="checkbox" id="mute">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <div class="toggle">
+        <span>Request permission to unmute participants</span>
+        <label class="toggle-switch">
+            <input type="checkbox" id="requestUnmute">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <button type="button" onclick="sendWhatsApp()">Kirim</button>
+</div>
+
+<script>
+function sendWhatsApp() {
+    const capacity = document.getElementById("capacity").value;
+    const topic = document.getElementById("topic").value;
+    const startDate = document.getElementById("startDate").value;
+    const startTime = document.getElementById("startTime").value;
+    const passcode = document.getElementById("passcode").value;
+    const mute = document.getElementById("mute").checked ? "Ya" : "Tidak";
+    const requestUnmute = document.getElementById("requestUnmute").checked ? "Ya" : "Tidak";
+
+    if (!capacity || !topic || !startDate || !startTime || !passcode) {
+        alert("Harap isi semua field yang bertanda *");
+        return;
+    }
+
+    const message = `Meeting Capacity: ${capacity}%0ATopic: ${topic}%0AStart Date: ${startDate}%0AStart Time: ${startTime}%0APasscode: ${passcode}%0AMute participants: ${mute}%0ARequest unmute: ${requestUnmute}`;
+    const phone = "6285174146390"; // 62 untuk Indonesia
+    const url = `https://wa.me/${phone}?text=${message}`;
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
