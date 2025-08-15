@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Pertemuan Kuliah</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 80%;
+            /* max-width: 800px; */
+            background: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #555;
+            margin-top: 0;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .rekap {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .rekap p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="namaMatkul">ETIKA BISNIS</h1>
+        <h2 id="pertemuan">Pertemuan 2</h2>
+
+        <div class="video-container">
+            <!-- Ganti link src sesuai link embed Google Drive -->
+            <iframe id="videoZoom" src="https://drive.google.com/file/d/1CQ_Ixhzgq0yGgNVA41ss3k2dvXuh73dW/preview" allowfullscreen></iframe>
+        </div>
+
+        <div class="rekap">
+            <p><span class="label">Dosen:</span> <span id="namaDosen">....</span></p>
+            <p><span class="label">Tanggal Pertemuan:</span> <span id="tanggal">....</span></p>
+            <p><span class="label">Tugas:</span> <span id="tugas">....</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Data pertemuan bisa diubah lewat JavaScript
+        const dataPertemuan = {
+            namaMatkul: "ETIKA BISNIS ",
+            pertemuan: "Pertemuan 2",
+            videoURL: "https://drive.google.com/file/d/1CQ_Ixhzgq0yGgNVA41ss3k2dvXuh73dW/preview", // Ganti ID_FILE dengan ID Google Drive
+            namaDosen: "Dr. Suparno, Drs,. M.M., MBA.",
+            tugas: "-",
+            tanggal: "15 Agustus 2025"
+        };
+
+        // Menampilkan data ke elemen HTML
+        document.getElementById("namaMatkul").textContent = dataPertemuan.namaMatkul;
+        document.getElementById("pertemuan").textContent = dataPertemuan.pertemuan;
+        document.getElementById("videoZoom").src = dataPertemuan.videoURL;
+        document.getElementById("namaDosen").textContent = dataPertemuan.namaDosen;
+        document.getElementById("tugas").textContent = dataPertemuan.tugas;
+        document.getElementById("tanggal").textContent = dataPertemuan.tanggal;
+    </script>
+
+</body>
+</html>
